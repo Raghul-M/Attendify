@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#startBtn").attr("disabled", true);
+            $("form input").on('keyup', function() {
+                var empty = false;
+                $('form input[required]').each(function() {
+                    if ($(this).val() == '') {
+                        empty = true;
+                    }
+                });
+                if (empty) {
+                    $("#startBtn").attr("disabled", true);
+                } else {
+                    $("#startBtn").attr("disabled", false);
+                }
+            });
+        });
+    </script>
+    <style>
+body {
+			background-color: #f8f9fa;
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			line-height: 1.5;
+			margin: 0;
+			padding: 0;
+		}
+
+		h1 {
+			color: #2ea44f;
+			font-size: 2rem;
+			font-weight: 400;
+			margin: 2rem 0 1rem;
+			text-align: center;
+		}
+
+		form {
+			background-color: #fff;
+			border-radius: 4px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                        display: flex;
+			flex-direction: column;
+			margin: 2rem auto;
+			max-width: 500px;
+			padding: 0.5rem;
+		}
+
+		label {
+			color: #2ea44f;
+			font-size: 1.2rem;
+			font-weight: bold;
+			margin-bottom: 0.5rem;
+			text-align: left;
+		}
+
+		input,
+		select {
+			background-color: #f2f2f2;
+			border: none;
+			border-radius: 4px;
+			box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+			margin-bottom: 1rem;
+			padding: 0.5rem;
+			width: 100%;
+                        }
+
+		input:focus,
+		select:focus {
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+			outline: none;
+		}
+
+		button {
+			background-color: #6f42c1;
+			border: none;
+			border-radius: 4px;
+			color: #fff;
+			cursor: pointer;
+			font-size: 1.2rem;
+			font-weight: bold;
+			margin-top: 1rem;
+			padding: 0.5rem;
+			text-transform: uppercase;
+			transition: background-color 0.2s ease-in-out;
+		}
+button:hover {
+			background-color: #8e44ad;
+		}
+
+		button:disabled {
+			background-color: #bbb;
+			cursor: not-allowed;
+		}
+
+		.success-message {
+			background-color: #dff0d8;
+			border-radius: 4px;
+			color: #3c763d;
+			font-size: 1.2rem;
+			font-weight: bold;
+			margin-top: 1rem;
+			margin-left:120px;
+			padding: 0.5rem;
+			text-align: center;
+		}
+.error-message {
+			background-color: #f2dede;
+			border-radius: 4px;
+			color: #a94442;
+			font-size: 1.2rem;
+			font-weight: bold;
+			margin-top: 1rem;
+			padding: 0.5rem;
+			text-align: center;
+		}
+
+
+    </style>
+</head>
+<body>
+    <h1>Registration Form</h1>
+    <form method="post" action="/run_opencv">
+        <label for="student_name">Student Name:</label>
+        <input type="text" id="student_name" name="student_name" required><br><br>
+        <label for="reg_no">Reg No:</label>
+        <input type="text" id="reg_no" name="reg_no" required><br><br>
+        <label for="department">Department:</label>
+        <select id="department" name="department" required>
+            <option value="">--Select--</option>
+            <option value="BSC">BSC</option>
+            <option value="BCA">BCA</option>
+            <option value="BCOM">BCOM</option>
+        </select><br><br>
+        <label for="staff_incharge">Staff Incharge:</label>
+        <input type="text" id="staff_incharge" name="staff_incharge" required><br><br>
+        <input type="submit" id="startBtn" value="Start" disabled>
+    </form>
+    <div id="successStatus"></div>
+    <script>
+        $(function() {
+            $('form').on('submit', function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'post',
+                    url: '/run_opencv',
+                    data: $('form').serialize(),
+                    success: function() {
+                        $('#successStatus').html('<p style="color:green;">Registration Successful!</p>');
+                        $("#startBtn").attr("disabled", true);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
