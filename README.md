@@ -1,1 +1,1 @@
-# Attendify - Automated Cloud Based Attendance System
+# Attendify - Cloud Based Attendance System
